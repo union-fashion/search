@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: Search
+  description: The API for searching for products in the Union Fashion cawtalog.
+  contact: {}
+  version: '1.3.0'
+servers:
+- url: http://example.com
+  variables: {}
+paths:
+  /search:
+    get:
+      tags:
+      - Search
+      summary: Keyword
+      description: Search for products by keyword.
+      operationId: Keyword
+      parameters:
+      - name: query
+        in: query
+        description: The keyword to search on.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: jeans
+      responses:
+        200:
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keyword'
+              example:
+                products:
+                - id: XYZ-JEAN-123
+                  category: Jeans
+                  brand: Union
+                  color: black
+                  gender: m
+                  unitPrice: 49.99
+                  unitSalePrice: 29.99
+                - id: QWE-JEAN-098
+                  category: Jeans
+                  brand: Levis
+                  color: blue
+                  gender: f
+                  unitPrice: 39.99
+                  unitSalePrice: 39.99
+      deprecated: false
+components:
+  schemas:
+    Keyword:
+      title: Keyword
+      required:
+      - products
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+          description: ''
+      example:
+        products:
+        - id: XYZ-JEAN-123
+          category: Jeans
+          brand: Union
+          color: black
+          gender: m
+          unitPrice: 49.99
+          unitSalePrice: 29.99
+        - id: QWE-JEAN-098
+          category: Jeans
+          brand: Levis
+          color: blue
+          gender: f
+          unitPrice: 39.99
+          unitSalePrice: 39.99
+    Product:
+      title: Product
+      required:
+      - id
+      - category
+      - brand
+      - color
+      - gender
+      - unitPrice
+      - unitSalePrice
+      type: object
+      properties:
+        id:
+          type: string
+        category:
+          type: string
+        brand:
+          type: string
+        color:
+          type: string
+        gender:
+          type: string
+        unitPrice:
+          type: number
+        unitSalePrice:
+          type: number
+      example:
+        id: XYZ-JEAN-123
+        category: Jeans
+        brand: Union
+        color: black
+        gender: m
+        unitPrice: 49.99
+        unitSalePrice: 29.99
+tags:
+- name: Search
+  description: 'Seaching API resources.'
